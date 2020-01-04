@@ -1,5 +1,5 @@
 # サンプルサイト起動方法
-下記のGoコマンドを実行する。制御許可を求められる場合は許可する。
+下記のGoコマンドを実行する。ファイアウォール経由の許可を求められる場合はアクセスを許可する。
 ```
 cd sample-site
 go run main.go
@@ -9,4 +9,18 @@ go run main.go
 下記のURLへアクセスする。
 ```
 http://localhost:3000/
+```
+
+# 蓄積サイトへのアクセス方法
+下記のURLへアクセスする。
+```
+http://localhost:3000/old/
+```
+なお、サイトは下記の5つを蓄積している。
+```
+http://localhost:3000/old/20200101/
+http://localhost:3000/old/20200102/
+http://localhost:3000/old/20200103/
+http://localhost:3000/old/20200104/
+http://localhost:3000/old/20200105/
 ```
