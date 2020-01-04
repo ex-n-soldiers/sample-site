@@ -4,3 +4,9 @@
 cd sample-site
 go run main.go
 ```
+
+# サンプルサイトへのアクセス方法
+下記のURLへアクセスする。
+```
+http://localhost:3000/
+```
