@@ -16,11 +16,9 @@ http://localhost:3000/
 ```
 http://localhost:3000/old/
 ```
-なお、サイトは下記の5つを蓄積している。
+なお、サイトは下記の3つを蓄積している。
 ```
-http://localhost:3000/old/20200101/
 http://localhost:3000/old/20200102/
 http://localhost:3000/old/20200103/
 http://localhost:3000/old/20200104/
-http://localhost:3000/old/20200105/
 ```
