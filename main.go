@@ -52,7 +52,7 @@ func main() {
         http.Handle("/", http.FileServer(http.Dir("static/old/20200104")))
     default:
         // エラー
-        log.Fatal("execute \"go run main.go\" or \"go run main.go -d <day>\" (<day> must be from 1 to 5).")
+        log.Fatal("execute \"go run main.go\" or \"go run main.go -d <day>\" (<day> must be from 0 to 3).")
     }
 
     log.Println("Listening...")
