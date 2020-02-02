@@ -43,6 +43,10 @@ td {
     padding-bottom: 10pt;
 }
 
+#item_list p.notFound {
+    text-align: center;
+}
+
 #item_list img {
     width: 128px;
     height: auto;
@@ -59,6 +63,35 @@ td {
 #item_details img {
     width: 196px;
     height: auto;
+}
+
+#pagenation ul {
+    margin: 0 0 10px;
+    padding: 10px 10px 5px;
+    background: #eee;
+    text-align: center;
+}
+
+#pagenation ul li {
+    display: inline;
+    margin: 0 2px;
+    padding: 0;
+}
+
+#pagenation ul li span,
+#pagenation ul li a {
+    display: inline-block;
+    margin-bottom: 5px;
+    padding: 1px 8px;
+    background: #fff;
+    border: 1px solid #aaa;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+#pagenation ul li a:hover {
+    background: #eeeff7;
+    border-color: #00f;
 }
 
 #footer h5 {

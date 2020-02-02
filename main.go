@@ -5,7 +5,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -37,8 +39,7 @@ func main() {
 	// オプションにより表示する商品リストを変更
 	switch day {
 	case 0:
-		// 複数ページの商品リストを表示
-		http.Handle("/", http.FileServer(http.Dir("static")))
+		http.HandleFunc("/", handler)
 	case 1:
 		http.Handle("/", http.FileServer(http.Dir("static/old/20200102")))
 	case 2:
@@ -65,4 +66,35 @@ func changeFileUpdatedAt(dirPath string, time time.Time) {
 	for _, f := range files {
 		os.Chtimes(f, time, time)
 	}
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	// パス、クエリパラメータを取得
+	urlPath := path.Join("static", r.URL.Path)
+	query := r.URL.Query()
+
+	// 表示するページ番号を設定
+	var page string
+	p := query["page"]
+	if len(p) == 0 {
+		page = "1"
+	} else {
+		page = p[0]
+	}
+
+	// 表示するファイルを仮設定
+	ext := path.Ext(urlPath)
+	if ext == "" {
+		urlPath = path.Join(urlPath, "index.html")
+		ext = path.Ext(urlPath)
+	}
+
+	// index.htmlが指定された場合は、ページ名を付与したファイルを表示
+	if path.Base(urlPath) == "index.html" {
+		if page == "1" || page == "2" || page == "3" {
+			urlPath = strings.TrimRight(urlPath, ext) + page + ext
+		}
+	}
+
+	http.ServeFile(w, r, urlPath)
 }
