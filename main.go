@@ -51,7 +51,7 @@ func main() {
 	}
 
 	// サーバーを立ち上げる
-	port := "3000"
+	port := "5000"
 	log.Println("Listening...")
 	log.Println("Go to http://localhost:" + port)
 	http.ListenAndServe(":"+port, nil)
