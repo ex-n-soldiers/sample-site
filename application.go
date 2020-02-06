@@ -91,7 +91,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	// index.htmlが指定された場合は、ページ名を付与したファイルを表示
 	if path.Base(urlPath) == "index.html" {
-		if page == "1" || page == "2" || page == "3" {
+		if page == "1" || page == "2" {
 			urlPath = strings.TrimRight(urlPath, ext) + page + ext
 		}
 	}
