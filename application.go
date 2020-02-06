@@ -47,11 +47,11 @@ func main() {
 	case 3:
 		http.Handle("/", http.FileServer(http.Dir("static/old/20200104")))
 	default:
-		log.Fatal("execute \"go run main.go\" or \"go run main.go -d <day>\" (<day> must be from 0 to 3).")
+		log.Fatal("execute \"go run application.go\" or \"go run application.go -d <day>\" (<day> must be from 0 to 3).")
 	}
 
 	// サーバーを立ち上げる
-	port := "3000"
+	port := "5000"
 	log.Println("Listening...")
 	log.Println("Go to http://localhost:" + port)
 	http.ListenAndServe(":"+port, nil)
