@@ -5,17 +5,10 @@ cd sample-site
 go run application.go
 ```
 
-3日分の蓄積サイトにアクセスする場合は、-dオプションを指定して実行する。
-* 1日目の場合
+さらに3日分の蓄積サイトにアクセスする場合は、-dオプションを指定して実行する。
 ```
 go run application.go -d 1
-```
-* 2日目の場合
-```
 go run application.go -d 2
-```
-* 3日目の場合
-```
 go run application.go -d 3
 ```
 
