@@ -33,21 +33,21 @@ func main() {
 
 	// オプション取得
 	var day int
-	flag.IntVar(&day, "d", 0, "select day from 1 to 3. 0 (default) shows lists with multiple pages.")
+	flag.IntVar(&day, "d", 1, "select day from 1 to 4. 1 (default) shows lists with multiple pages.")
 	flag.Parse()
 
 	// オプションにより表示する商品リストを変更
 	switch day {
-	case 0:
-		http.HandleFunc("/", handler)
 	case 1:
-		http.Handle("/", http.FileServer(http.Dir("static/old/20200102")))
+		http.HandleFunc("/", handler)
 	case 2:
-		http.Handle("/", http.FileServer(http.Dir("static/old/20200103")))
+		http.Handle("/", http.FileServer(http.Dir("static/old/20200102")))
 	case 3:
+		http.Handle("/", http.FileServer(http.Dir("static/old/20200103")))
+	case 4:
 		http.Handle("/", http.FileServer(http.Dir("static/old/20200104")))
 	default:
-		log.Fatal("execute \"go run application.go\" or \"go run application.go -d <day>\" (<day> must be from 0 to 3).")
+		log.Fatal("execute \"go run application.go\" or \"go run application.go -d <day>\" (<day> must be from 1 to 4).")
 	}
 
 	// サーバーを立ち上げる
