@@ -36,19 +36,7 @@ func main() {
 	flag.IntVar(&day, "d", 1, "select day from 1 to 4. 1 (default) shows lists with multiple pages.")
 	flag.Parse()
 
-	// オプションにより表示する商品リストを変更
-	switch day {
-	case 1:
-		http.HandleFunc("/", handler)
-	case 2:
-		http.Handle("/", http.FileServer(http.Dir("static/old/20200102")))
-	case 3:
-		http.Handle("/", http.FileServer(http.Dir("static/old/20200103")))
-	case 4:
-		http.Handle("/", http.FileServer(http.Dir("static/old/20200104")))
-	default:
-		log.Fatal("execute \"go run application.go\" or \"go run application.go -d <day>\" (<day> must be from 1 to 4).")
-	}
+	http.HandleFunc("/", handler(day))
 
 	// サーバーを立ち上げる
 	port := "5000"
@@ -68,33 +56,50 @@ func changeFileUpdatedAt(dirPath string, time time.Time) {
 	}
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	// パス、クエリパラメータを取得
-	urlPath := path.Join("static", r.URL.Path)
-	query := r.URL.Query()
-
-	// 表示するページ番号を設定
-	var page string
-	p := query["page"]
-	if len(p) == 0 {
-		page = "1"
-	} else {
-		page = p[0]
+func handler(day int) func(http.ResponseWriter, *http.Request) {
+	// オプションにより表示する商品リストを変更
+	var base string
+	switch day {
+	case 1:
+		base = "static"
+	case 2:
+		base = path.Join("static", "old", "20200102")
+	case 3:
+		base = path.Join("static", "old", "20200103")
+	case 4:
+		base = path.Join("static", "old", "20200104")
+	default:
+		log.Fatal("execute \"go run application.go\" or \"go run application.go -d <day>\" (<day> must be from 1 to 4).")
 	}
 
-	// 表示するファイルを仮設定
-	ext := path.Ext(urlPath)
-	if ext == "" {
-		urlPath = path.Join(urlPath, "index.html")
-		ext = path.Ext(urlPath)
-	}
+	return func(w http.ResponseWriter, r *http.Request) {
+		// パス、クエリパラメータを取得
+		urlPath := path.Join(base, r.URL.Path)
+		query := r.URL.Query()
 
-	// index.htmlが指定された場合は、ページ名を付与したファイルを表示
-	if path.Base(urlPath) == "index.html" {
-		if page == "1" || page == "2" {
-			urlPath = strings.TrimRight(urlPath, ext) + page + ext
+		// 表示するページ番号を設定
+		var page string
+		p := query["page"]
+		if len(p) == 0 {
+			page = "1"
+		} else {
+			page = p[0]
 		}
-	}
 
-	http.ServeFile(w, r, urlPath)
+		// 表示するファイルを仮設定
+		ext := path.Ext(urlPath)
+		if ext == "" {
+			urlPath = path.Join(urlPath, "index.html")
+			ext = path.Ext(urlPath)
+		}
+
+		// index.htmlが指定された場合は、ページ名を付与したファイルを表示
+		if path.Base(urlPath) == "index.html" {
+			if page == "1" || page == "2" {
+				urlPath = strings.TrimRight(urlPath, ext) + page + ext
+			}
+		}
+
+		http.ServeFile(w, r, urlPath)
+	}
 }
